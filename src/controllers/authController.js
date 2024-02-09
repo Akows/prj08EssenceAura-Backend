@@ -92,7 +92,8 @@ const loginHandler = async (req, res) => {
         // 리프래시 토큰은 Http Only 쿠키에 담아서 반환
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            // secure: process.env.NODE_ENV === 'production',
+            secure: false,
             sameSite: 'strict',
             path: '/',
             expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
