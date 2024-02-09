@@ -96,6 +96,7 @@ const loginHandler = async (req, res) => {
             secure: false,
             sameSite: 'strict',
             path: '/',
+            domain: 'essenceaura-production.s3-website.ap-northeast-2.amazonaws.com',
             expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
         });
 
