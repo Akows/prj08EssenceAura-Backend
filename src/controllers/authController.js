@@ -92,12 +92,10 @@ const loginHandler = async (req, res) => {
         // 리프래시 토큰은 Http Only 쿠키에 담아서 반환
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            // secure: process.env.NODE_ENV === 'production',
-            secure: false,
-            sameSite: 'strict',
+            secure: true, // 항상 쿠키를 secure로 설정합니다. 로컬에서 테스트할 때는 이를 false로 설정할 수 있습니다.
+            sameSite: 'None', // 크로스 사이트 요청에서도 쿠키를 사용하려면 이렇게 설정합니다.
             path: '/',
-            domain: 'essenceaura-production.s3-website.ap-northeast-2.amazonaws.com',
-            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7일 후 만료
         });
 
         // 액세스 토큰은 로그인 정보와 함께 브라우저로 반환
