@@ -27,6 +27,11 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
+// Health Check 라우트
+app.get('/healthcheck', (req, res) => {
+    res.status(200).send('Healthy');
+});
+
 // 계정 라우트 추가
 app.use('/auth', authRoutes);
 
