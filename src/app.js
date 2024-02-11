@@ -18,8 +18,39 @@ const corsOptions = {
 };
 
 // 로깅 미들웨어
+// app.use((req, res, next) => {
+//     console.log(`${new Date().toISOString()} - ${req.method} Request to ${req.originalUrl}`);
+//     next();
+// });
+
+// 연결 테스트용 강화 로깅 미들웨어
 app.use((req, res, next) => {
+    const oldWrite = res.write;
+    const oldEnd = res.end;
+    const chunks = [];
+
+    // 요청 로깅
     console.log(`${new Date().toISOString()} - ${req.method} Request to ${req.originalUrl}`);
+    console.log(`Headers: ${JSON.stringify(req.headers)}`);
+    console.log(`Body: ${JSON.stringify(req.body)}`);
+
+    res.write = function (chunk) {
+        chunks.push(chunk);
+        return oldWrite.apply(res, arguments);
+    };
+
+    res.end = function (chunk) {
+        if (chunk) {
+            chunks.push(chunk);
+        }
+        const responseBody = Buffer.concat(chunks).toString('utf8');
+        
+        // 응답 로깅
+        console.log(`Response: ${res.statusCode} - ${responseBody}`);
+        
+        oldEnd.apply(res, arguments);
+    };
+
     next();
 });
 
