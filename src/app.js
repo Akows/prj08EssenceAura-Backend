@@ -11,7 +11,7 @@ require('dotenv').config();
 
 // CORS 미들웨어 설정
 const corsOptions = {
-    origin: 'http://essenceaura-production.s3-website.ap-northeast-2.amazonaws.com',
+    origin: 'https://essence-aura.com',
     credentials: true, // 이 옵션을 통해 쿠키를 함께 보낼 수 있도록 허가
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
     allowedHeaders: ['Content-Type', 'Authorization'],
