@@ -34,6 +34,10 @@ app.use((req, res, next) => {
     console.log(`Headers: ${JSON.stringify(req.headers)}`);
     console.log(`Body: ${JSON.stringify(req.body)}`);
 
+    // 백엔드 요청 구분
+    console.log(`Protocol: ${req.protocol}`);
+    console.log(`X-Forwarded-Proto: ${req.headers['x-forwarded-proto']}`);
+
     res.write = function (chunk) {
         chunks.push(chunk);
         return oldWrite.apply(res, arguments);
