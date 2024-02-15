@@ -35,37 +35,32 @@ app.use((req, res, next) => {
 //     next();
 // });
 
-// 연결 테스트용 강화 로깅 미들웨어
+// 강화된 로깅 미들웨어
 app.use((req, res, next) => {
-    const oldWrite = res.write;
-    const oldEnd = res.end;
-    const chunks = [];
+    const start = new Date();
+    let log = `${start.toISOString()} - ${req.method} Request to ${req.originalUrl}`;
 
-    // 요청 로깅
-    console.log(`${new Date().toISOString()} - ${req.method} Request to ${req.originalUrl}`);
-    console.log(`Headers: ${JSON.stringify(req.headers)}`);
-    console.log(`Body: ${JSON.stringify(req.body)}`);
+    // 요청 헤더 및 바디 로깅
+    log += `\nHeaders: ${JSON.stringify(req.headers)}`;
+    log += `\nBody: ${JSON.stringify(req.body)}`;
 
-    // 백엔드 요청 구분
-    console.log(`Protocol: ${req.protocol}`);
-    console.log(`X-Forwarded-Proto: ${req.headers['x-forwarded-proto']}`);
+    // 프로토콜 및 X-Forwarded-Proto 로깅
+    log += `\nProtocol: ${req.protocol}`;
+    log += `\nX-Forwarded-Proto: ${req.headers['x-forwarded-proto']}`;
 
-    res.write = function (chunk) {
-        chunks.push(chunk);
-        return oldWrite.apply(res, arguments);
-    };
+    res.on('finish', () => {
+        // 요청 처리 시간 계산
+        const duration = new Date() - start;
+        // 응답 상태 및 처리 시간 로깅
+        log += `\nResponse: ${res.statusCode} - Duration: ${duration}ms`;
+        console.log(log);
+    });
 
-    res.end = function (chunk) {
-        if (chunk) {
-            chunks.push(chunk);
-        }
-        const responseBody = Buffer.concat(chunks).toString('utf8');
-        
-        // 응답 로깅
-        console.log(`Response: ${res.statusCode} - ${responseBody}`);
-        
-        oldEnd.apply(res, arguments);
-    };
+    res.on('error', (err) => {
+        // 오류 발생 시 로깅
+        log += `\nResponse Error: ${err}`;
+        console.error(log);
+    });
 
     next();
 });
