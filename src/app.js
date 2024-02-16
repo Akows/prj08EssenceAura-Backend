@@ -9,33 +9,25 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 require('dotenv').config();
 
-// CORS 미들웨어 설정
+// CORS 설정: 허용되는 출처(origin)과 기타 설정들을 명시
 const corsOptions = {
     origin: ['https://essence-aura.com', 'https://app.essence-aura.com'], // 여러 출처 허용
-    credentials: true, // 이 옵션을 통해 쿠키를 함께 보낼 수 있도록 허가
-    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // 쿠키를 함께 보낼 수 있도록 허가
+    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE', // 허용되는 HTTP 메소드들
+    allowedHeaders: ['Content-Type', 'Authorization'], // 허용되는 헤더들
 };
 
-// OPTIONS 메서드에 대한 CORS preflight 요청을 처리
+// 모든 경로에 대한 OPTIONS 요청에 대해 CORS preflight 응답
 app.options('*', cors(corsOptions));
 
-// 모든 요청에 대한 CORS 미들웨어 설정
+// 모든 요청에 대한 CORS 미들웨어 설정을 적용
 app.use(cors(corsOptions));
 
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', 'https://essence-aura.com');
-//     res.header('Access-Control-Allow-Credentials', true);
-//     res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
-//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-//     next();
-// });
+// JSON 요청 본문을 파싱하기 위한 미들웨어
+app.use(express.json());
 
-// 로깅 미들웨어
-// app.use((req, res, next) => {
-//     console.log(`${new Date().toISOString()} - ${req.method} Request to ${req.originalUrl}`);
-//     next();
-// });
+// 쿠키를 파싱하기 위한 미들웨어
+app.use(cookieParser());
 
 // 강화된 로깅 미들웨어
 app.use((req, res, next) => {
@@ -66,9 +58,6 @@ app.use((req, res, next) => {
 
     next();
 });
-
-app.use(express.json());
-app.use(cookieParser());
 
 // Health Check 라우트
 app.get('/healthcheck', (req, res) => {
