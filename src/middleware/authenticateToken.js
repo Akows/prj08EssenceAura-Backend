@@ -24,7 +24,8 @@ const authenticateAccessToken = (req, res, next) => {
 
 // 리프래시 토큰 검증 미들웨어
 const authenticateRefreshToken = (req, res, next) => {
-  const refreshToken = req.cookies['refreshToken']; // 쿠키에서 리프레시 토큰 추출
+  // const refreshToken = req.cookies['refreshToken']; // 쿠키에서 리프레시 토큰 추출
+  const refreshToken = req.body.refreshToken || req.headers['refresh-token'];
 
   if (!refreshToken) {
     return res.sendStatus(401);

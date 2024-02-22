@@ -5,7 +5,9 @@ const { getUserInfo, updateUserInfo, getOrdersByUserId } = require('../service/u
 const getUserInfoHandler = async (req, res) => {
     try {
         // 쿠키에서 리프레시 토큰 추출
-        const refreshToken = req.cookies['refreshToken'];
+        // const refreshToken = req.cookies['refreshToken'];
+        const refreshToken = req.body.refreshToken || req.headers['refresh-token'];
+
         // 리프레시 토큰을 디코드하여 사용자 ID 추출
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
         const userId = decoded.id;
@@ -24,7 +26,9 @@ const getUserInfoHandler = async (req, res) => {
 const updateUserInfoHandler = async (req, res) => {
     try {
         // 쿠키에서 리프레시 토큰 추출
-        const refreshToken = req.cookies['refreshToken'];
+        // const refreshToken = req.cookies['refreshToken'];
+        const refreshToken = req.body.refreshToken || req.headers['refresh-token'];
+
         // 리프레시 토큰을 디코드하여 사용자 ID 추출
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
         const userId = decoded.id;
@@ -44,7 +48,9 @@ const updateUserInfoHandler = async (req, res) => {
 const getOrdersByUserIdHandler = async (req, res) => {
     try {
         // 쿠키에서 리프레시 토큰 추출
-        const refreshToken = req.cookies['refreshToken'];
+        // const refreshToken = req.cookies['refreshToken'];
+        const refreshToken = req.body.refreshToken || req.headers['refresh-token'];
+
         // 리프레시 토큰을 디코드하여 사용자 ID 추출
         const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
         const userId = decoded.id;
