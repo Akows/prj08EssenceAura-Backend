@@ -102,6 +102,7 @@ const loginHandler = async (req, res) => {
         return res.json({
             message: '로그인 성공',
             accessToken,
+            refreshToken,
             userInfo: {
                 id: user.id,
                 email: user.email,
@@ -117,7 +118,8 @@ const loginHandler = async (req, res) => {
 
 // 리프레시 토큰을 기반으로 액세스 토큰을 재발급하는 기능
 const refreshTokenHandler = async (req, res) => {
-    const refreshToken = req.cookies['refreshToken'];
+    // const refreshToken = req.cookies['refreshToken'];
+    const refreshToken = req.body.refreshToken || req.headers['refresh-token'];
 
     if (!refreshToken) {
         return res.status(401).json({ message: '리프레시 토큰이 필요합니다.' });
@@ -156,7 +158,8 @@ const refreshTokenHandler = async (req, res) => {
 // 로그아웃 핸들러
 const logoutHandler = async (req, res) => {
     try {
-        const refreshToken = req.cookies['refreshToken'];
+        // const refreshToken = req.cookies['refreshToken'];
+        const refreshToken = req.body.refreshToken || req.headers['refresh-token'];
 
         if (!refreshToken) {
             return res.status(401).json({ message: '로그아웃을 위한 토큰이 없습니다.' });
@@ -177,7 +180,8 @@ const logoutHandler = async (req, res) => {
 
 // 로그인 상태 검증
 const checkAuthHandler = async (req, res) => {
-    const refreshToken = req.cookies['refreshToken'];
+    // const refreshToken = req.cookies['refreshToken'];
+    const refreshToken = req.body.refreshToken || req.headers['refresh-token'];
 
     if (!refreshToken) {
         return res.status(401).json({ message: '인증되지 않음' });

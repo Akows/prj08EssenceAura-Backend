@@ -11,7 +11,11 @@ require('dotenv').config();
 
 // CORS 설정: 허용되는 출처(origin)과 기타 설정들을 명시
 const corsOptions = {
-    origin: ['https://essence-aura.com', 'https://app.essence-aura.com'], // 여러 출처 허용
+    origin: [
+        'https://essence-aura.com', 
+        'https://app.essence-aura.com',
+        'http://essenceaura-production.s3-website.ap-northeast-2.amazonaws.com' // 추가된 출처
+    ],
     credentials: true, // 쿠키를 함께 보낼 수 있도록 허가
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE', // 허용되는 HTTP 메소드들
     allowedHeaders: ['Content-Type', 'Authorization'], // 허용되는 헤더들
