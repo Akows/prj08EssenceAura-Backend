@@ -16,7 +16,7 @@ router.post('/login', authController.loginHandler);
 router.post('/logout', authenticateRefreshToken, authController.logoutHandler);
 
 // 사용자 로그인 상태 검증 - 액세스 토큰 검증.
-router.get('/check-auth', authenticateAccessToken, authController.checkAuthHandler);
+router.post('/check-auth', authenticateAccessToken, authController.checkAuthHandler);
 
 // 액세스 토큰 재발급 - 리프래시 토큰 검증.
 router.get('/refresh-token', authenticateRefreshToken, authController.refreshTokenHandler);
