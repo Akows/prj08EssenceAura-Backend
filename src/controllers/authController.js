@@ -104,7 +104,7 @@ const loginHandler = async (req, res) => {
             accessToken,
             refreshToken,
             userInfo: {
-                id: user.id,
+                user_id: user.user_id,
                 email: user.email,
                 username: user.username,
                 isAdmin
