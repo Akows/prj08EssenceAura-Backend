@@ -15,12 +15,10 @@ const validateSignupData = (formData) => {
         errors.email = '유효한 이메일 주소를 입력하세요.';
     }
 
-    // 비밀번호 복잡성 검사
-    if (formData.password.length < 6) {
-        errors.password = '비밀번호는 6자 이상이어야 합니다.';
+    // 비밀번호 길이 및 복잡성 검증
+    if (formData.password.length < 8 || !/\d/.test(formData.password) || !/[A-Z]/.test(formData.password)) {
+        errors.password = '비밀번호는 최소 8자 이상이며, 하나 이상의 숫자와 대문자를 포함해야 합니다.';
     }
-
-    // 추가 유효성 검사...
 
     return errors;
 };

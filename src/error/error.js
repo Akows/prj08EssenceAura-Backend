@@ -1,10 +1,10 @@
 class ApplicationError extends Error {
     constructor(message, status, code) {
-        super(message);
-        this.status = status;
-        this.code = code;
-        this.name = this.constructor.name;
-        Error.captureStackTrace(this, this.constructor);
+        super(message); // 기본 Error 클래스의 생성자 호출
+        this.status = status; // HTTP 상태 코드 (예: 404, 500)
+        this.code = code; // 내부적으로 사용할 오류 코드
+        this.name = this.constructor.name; // 오류 이름 설정
+        Error.captureStackTrace(this, this.constructor); // 스택 추적을 캡처
     }
 }
 
