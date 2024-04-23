@@ -7,6 +7,7 @@ const userRoutes = require('./routes/userRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const rbbRoutes = require('./routes/rbbRoutes');
 require('dotenv').config();
 
 // CORS 설정: 허용되는 출처(origin)과 기타 설정들을 명시
@@ -14,7 +15,8 @@ const corsOptions = {
     origin: [
         'https://essence-aura.com', 
         'https://app.essence-aura.com',
-        'http://essenceaura-production.s3-website.ap-northeast-2.amazonaws.com' // 추가된 출처
+        'http://essenceaura-production.s3-website.ap-northeast-2.amazonaws.com',
+        'https://react-bubble-bubble.vercel.app/',
     ],
     credentials: true, // 쿠키를 함께 보낼 수 있도록 허가
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE', // 허용되는 HTTP 메소드들
@@ -82,5 +84,8 @@ app.use('/product', productRoutes);
 
 // 주문 라우트 추가
 app.use('/order', orderRoutes);
+
+// 버블버블라우트
+app.use('/rbb', rbbRoutes);
 
 module.exports = app;
