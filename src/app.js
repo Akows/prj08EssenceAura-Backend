@@ -16,6 +16,7 @@ const corsOptions = {
         'https://essence-aura.com', 
         'https://app.essence-aura.com',
         'http://essenceaura-production.s3-website.ap-northeast-2.amazonaws.com',
+        'http://reactbubblebubble-production.s3-website.ap-northeast-2.amazonaws.com/',
         'https://react-bubble-bubble.vercel.app/',
     ],
     credentials: true, // 쿠키를 함께 보낼 수 있도록 허가
